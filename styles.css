@@ -1034,7 +1034,29 @@ cite {
 }
 
 /* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .main-header {
+        height: auto;
+        min-height: 100vh;
+        padding: 60px 20px;
+    }
+    
+    .timeline-section,
+    .gallery-section,
+    .wishes-section {
+        padding: 60px 20px;
+    }
+    
+    .gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
 @media (max-width: 992px) {
+    html {
+        font-size: 95%;
+    }
+    
     .main-title {
         font-size: 4rem;
     }
@@ -1057,19 +1079,103 @@ cite {
     .timeline-content {
         padding-left: 50px;
     }
+    
+    .photo-memories {
+        gap: 15px;
+    }
+    
+    .photo-frame {
+        width: 220px;
+        height: 280px;
+    }
+    
+    .wishes-container {
+        gap: 20px;
+    }
+    
+    .wish-card {
+        width: calc(50% - 20px);
+        padding: 20px;
+    }
+    
+    /* Adjust family positions in animation */
+    .family-member-1 {
+        left: calc(50% - 100px);
+    }
+    
+    .family-member-2 {
+        right: calc(50% - 100px);
+    }
 }
 
 @media (max-width: 768px) {
+    html {
+        font-size: 90%;
+    }
+    
+    body {
+        overflow-x: hidden;
+    }
+    
+    .header-content {
+        padding: 0 10px;
+    }
+    
     .main-title {
+        font-size: 3.5rem;
+    }
+    
+    .and-symbol {
         font-size: 3rem;
     }
     
     .anniversary-counter {
         flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .counter-item {
+        margin: 5px;
+        min-width: 80px;
     }
     
     .section-title {
         font-size: 2.5rem;
+    }
+    
+    .photo-memories {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .photo-frame {
+        width: 85%;
+        max-width: 300px;
+        height: 350px;
+    }
+    
+    .gallery-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .gallery-item {
+        height: 200px;
+    }
+    
+    .wishes-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .wish-card {
+        width: 100%;
+        max-width: 350px;
+    }
+    
+    /* Animation adjustments */
+    .scene {
+        max-width: 95%;
     }
     
     .plate {
@@ -1110,15 +1216,35 @@ cite {
         font-size: 1.5rem;
         padding: 20px 40px;
     }
+    
+    /* Adjust family members positions */
+    .family-member-1 {
+        left: calc(50% - 90px);
+        bottom: 18%;
+    }
+    
+    .family-member-2 {
+        right: calc(50% - 90px);
+        bottom: 18%;
+    }
+    
+    .child.entered {
+        bottom: 12%;
+    }
 }
 
 @media (max-width: 576px) {
+    html {
+        font-size: 85%;
+    }
+    
     .main-title {
         font-size: 2.5rem;
     }
     
     .and-symbol {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        margin: 0 5px;
     }
     
     .counter-item span:first-child {
@@ -1132,10 +1258,30 @@ cite {
     
     .section-title {
         font-size: 2rem;
+        margin-bottom: 30px;
     }
     
+    .timeline-content {
+        padding: 15px;
+    }
+    
+    .timeline-item {
+        padding: 10px 20px;
+    }
+    
+    .gallery-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .gallery-item {
+        height: 150px;
+    }
+    
+    /* Animation adjustments for smaller screens */
     .plate {
         width: 120px;
+        bottom: 25%;
     }
     
     .cake {
@@ -1143,9 +1289,18 @@ cite {
         height: 60px;
     }
     
+    .cake.dropped {
+        top: calc(75% - 100px);
+    }
+    
     .character {
         width: 30px;
         height: 60px;
+        bottom: 25%;
+    }
+    
+    .character-name {
+        font-size: 10px;
     }
     
     .husband.entered {
@@ -1159,10 +1314,15 @@ cite {
     .knife {
         width: 60px;
         height: 15px;
+        top: calc(75% - 90px);
+    }
+    
+    .cut {
+        top: calc(75% - 80px);
     }
     
     .message h2 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .message p {
@@ -1170,7 +1330,7 @@ cite {
     }
     
     .anniversary-year {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
     
     blockquote {
@@ -1181,6 +1341,155 @@ cite {
     blockquote:before,
     blockquote:after {
         font-size: 3rem;
+    }
+    
+    /* Adjust family members for very small screens */
+    .family-member {
+        transform: scale(0.8);
+    }
+    
+    .family-member-1 {
+        left: calc(50% - 75px);
+        bottom: 22%;
+    }
+    
+    .family-member-2 {
+        right: calc(50% - 75px);
+        bottom: 22%;
+    }
+    
+    .child.entered {
+        bottom: 15%;
+        transform: translateX(-50%) scale(0.8);
+    }
+    
+    .child {
+        width: 30px;
+        height: 60px;
+    }
+}
+
+/* Extra Small Devices */
+@media (max-width: 375px) {
+    html {
+        font-size: 80%;
+    }
+    
+    .main-title {
+        font-size: 2.2rem;
+    }
+    
+    .and-symbol {
+        font-size: 1.8rem;
+    }
+    
+    .counter-item {
+        margin: 2px;
+        min-width: 70px;
+    }
+    
+    .counter-item span:first-child {
+        font-size: 1.5rem;
+    }
+    
+    .counter-label {
+        font-size: 0.8rem;
+    }
+    
+    .glow-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .timeline-content h3 {
+        font-size: 1.1rem;
+    }
+    
+    .timeline-content p {
+        font-size: 0.9rem;
+    }
+    
+    .gallery-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-item {
+        height: 180px;
+    }
+    
+    /* Further reduce animation sizes */
+    .plate {
+        width: 100px;
+    }
+    
+    .cake {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .character {
+        width: 25px;
+        height: 50px;
+    }
+    
+    .husband.entered {
+        left: calc(50% - 40px);
+    }
+    
+    .wife.entered {
+        right: calc(50% - 40px);
+    }
+    
+    .family-member-1 {
+        left: calc(50% - 65px);
+    }
+    
+    .family-member-2 {
+        right: calc(50% - 65px);
+    }
+    
+    .knife {
+        width: 50px;
+    }
+    
+    .message h2 {
+        font-size: 1.5rem;
+    }
+    
+    .message p {
+        font-size: 1rem;
+    }
+    
+    .anniversary-year {
+        font-size: 0.8rem;
+    }
+}
+
+/* Handle orientation change for better mobile experience */
+@media (max-height: 500px) and (orientation: landscape) {
+    .main-header {
+        padding: 30px 20px;
+    }
+    
+    .scene {
+        transform: scale(0.7);
+    }
+    
+    .plate {
+        bottom: 10%;
+    }
+    
+    .character {
+        bottom: 10%;
+    }
+    
+    .family-member-1, 
+    .family-member-2 {
+        bottom: 10%;
+    }
+    
+    .child.entered {
+        bottom: 5%;
     }
 }
 

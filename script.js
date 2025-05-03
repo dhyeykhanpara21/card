@@ -1,4 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Check for mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Set mobile-specific optimizations
+    if (isMobile) {
+        // Reduce particle counts for better performance on mobile
+        window.mobileOptimized = true;
+        
+        // Add touch-specific class to body for CSS adjustments
+        document.body.classList.add('mobile-device');
+        
+        // Disable parallax effects on mobile for better performance
+        const parallaxElements = document.querySelectorAll('.parallax-bg .layer');
+        parallaxElements.forEach(el => {
+            el.style.transform = 'none';
+        });
+    } else {
+        window.mobileOptimized = false;
+    }
+    
     // DOM Elements
     const animationContainer = document.getElementById('animationContainer');
     const celebrateButton = document.getElementById('celebrateButton');
@@ -249,8 +269,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create Hearts Function
     function createHearts() {
-        // Create 30 hearts with random positions and delays
-        for (let i = 0; i < 30; i++) {
+        // Determine particle count based on device (fewer on mobile)
+        const particleCount = window.mobileOptimized ? 15 : 30;
+        
+        // Create hearts with random positions and delays
+        for (let i = 0; i < particleCount; i++) {
             const heart = document.createElement('div');
             heart.className = 'heart';
             heart.innerHTML = heartSVG;
@@ -285,8 +308,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create Confetti Function
     function createConfetti() {
-        // Create 70 confetti pieces with random colors and positions
-        for (let i = 0; i < 70; i++) {
+        // Determine confetti count based on device (fewer on mobile)
+        const confettiCount = window.mobileOptimized ? 30 : 70;
+        
+        // Create confetti pieces with random colors and positions
+        for (let i = 0; i < confettiCount; i++) {
             const piece = document.createElement('div');
             piece.className = 'confetti-piece';
             
@@ -334,8 +360,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create Fireworks Function
     function createFireworks() {
-        // Create 5 fireworks at random positions
-        for (let i = 0; i < 5; i++) {
+        // Determine firework count based on device (fewer on mobile)
+        const fireworkCount = window.mobileOptimized ? 2 : 5;
+        
+        // Create fireworks at random positions
+        for (let i = 0; i < fireworkCount; i++) {
             const firework = document.createElement('div');
             firework.className = 'firework';
             
