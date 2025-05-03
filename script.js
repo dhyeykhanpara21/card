@@ -1,22 +1,70 @@
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
-    const nameForm = document.getElementById('nameForm');
-    const startButton = document.getElementById('startButton');
-    const name1Input = document.getElementById('name1');
-    const name2Input = document.getElementById('name2');
     const animationContainer = document.getElementById('animationContainer');
+    const celebrateButton = document.getElementById('celebrateButton');
+    const closeAnimationBtn = document.getElementById('closeAnimationBtn');
     const cake = document.getElementById('cake');
     const husband = document.getElementById('husband');
     const wife = document.getElementById('wife');
     const knife = document.getElementById('knife');
     const cut = document.getElementById('cut');
     const message = document.getElementById('message');
-    const coupleNames = document.getElementById('coupleNames');
     const hearts = document.getElementById('hearts');
     const confetti = document.getElementById('confetti');
+    const fireworks = document.getElementById('fireworks');
     const restartButton = document.getElementById('restartButton');
+    const currentYearEl = document.getElementById('currentYear');
 
-    // SVG templates for hearts and confetti
+    // Set current year
+    currentYearEl.textContent = new Date().getFullYear();
+
+    // Parallax effect for background layers
+    document.addEventListener('mousemove', function(e) {
+        const layers = document.querySelectorAll('.layer');
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        
+        layers.forEach(layer => {
+            const depth = layer.getAttribute('data-depth');
+            const moveX = (x * 100 * depth);
+            const moveY = (y * 100 * depth);
+            layer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+        });
+    });
+
+    // Add particle background
+    function createParticleBackground() {
+        const particles = document.getElementById('particles-background');
+        
+        for (let i = 0; i < 100; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Random size
+            const size = Math.random() * 3 + 1;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Random position
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            
+            // Random opacity and color
+            particle.style.opacity = Math.random() * 0.5 + 0.3;
+            
+            const colors = ['#e91e63', '#9c27b0', '#3f51b5', '#ffffff'];
+            particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Random animation duration and delay
+            const duration = Math.random() * 10 + 10;
+            const delay = Math.random() * 5;
+            particle.style.animation = `float ${duration}s ${delay}s infinite linear`;
+            
+            particles.appendChild(particle);
+        }
+    }
+
+    // SVG templates for hearts, confetti, and fireworks
     const heartSVG = `
         <svg viewBox="0 0 24 24">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -26,32 +74,47 @@ document.addEventListener('DOMContentLoaded', function() {
     const confettiColors = [
         '#e91e63', '#9c27b0', '#3f51b5', '#2196f3', '#4caf50', '#ffeb3b', '#ff9800'
     ];
+
+    // Create an array of firework colors
+    const fireworkColors = [
+        '#ff4081', '#7c4dff', '#00bcd4', '#ffc400', '#64ffda'
+    ];
     
-    // Start Button Event Listener
-    startButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Basic validation
-        if (name1Input.value.trim() === '' || name2Input.value.trim() === '') {
-            alert('Please enter both names');
-            return;
-        }
-        
-        // Set the couple names in the message
-        coupleNames.textContent = `${name1Input.value} & ${name2Input.value}`;
-        
-        // Hide form and show animation
-        nameForm.classList.add('hidden');
+    // Celebrate Button Event Listener
+    celebrateButton.addEventListener('click', function() {
+        // Show animation container
         animationContainer.classList.remove('hidden');
+        createParticleBackground();
         
         // Start animation sequence
         startAnimation();
+        
+        // Add animation to the timeline items with delay
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        timelineItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, 300 * index);
+        });
+    });
+    
+    // Close Animation Button Event Listener
+    closeAnimationBtn.addEventListener('click', function() {
+        animationContainer.classList.add('hidden');
+        resetAnimation();
     });
     
     // Restart Button Event Listener
     restartButton.addEventListener('click', function() {
         resetAnimation();
         startAnimation();
+    });
+
+    // Gallery item hover effect
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    galleryItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.2}s`;
     });
     
     // Animation Sequence Function
@@ -85,13 +148,28 @@ document.addEventListener('DOMContentLoaded', function() {
                             message.classList.add('visible');
                             createHearts();
                             createConfetti();
+                            createFireworks();
                             
                             // Play celebration sound (optional)
                             playSound('celebrate');
                             
+                            // Continue celebration effects
+                            const celebrationInterval = setInterval(() => {
+                                createHearts();
+                                createConfetti();
+                                if (Math.random() > 0.7) {
+                                    createFireworks();
+                                }
+                            }, 3000);
+                            
                             // Show restart button
                             setTimeout(() => {
                                 restartButton.classList.remove('hidden');
+                                
+                                // Stop continuous celebration effects after some time
+                                setTimeout(() => {
+                                    clearInterval(celebrationInterval);
+                                }, 15000);
                             }, 2000);
                             
                         }, 1000);
@@ -112,15 +190,16 @@ document.addEventListener('DOMContentLoaded', function() {
         message.classList.remove('visible');
         restartButton.classList.add('hidden');
         
-        // Clear hearts and confetti
+        // Clear hearts, confetti, and fireworks
         hearts.innerHTML = '';
         confetti.innerHTML = '';
+        fireworks.innerHTML = '';
     }
     
     // Create Hearts Function
     function createHearts() {
-        // Create 20 hearts with random positions and delays
-        for (let i = 0; i < 20; i++) {
+        // Create 30 hearts with random positions and delays
+        for (let i = 0; i < 30; i++) {
             const heart = document.createElement('div');
             heart.className = 'heart';
             heart.innerHTML = heartSVG;
@@ -129,6 +208,15 @@ document.addEventListener('DOMContentLoaded', function() {
             heart.style.left = `${left}%`;
             heart.style.bottom = '0';
             heart.style.animationDelay = `${Math.random() * 2}s`;
+            
+            // Random size
+            const size = Math.random() * 15 + 15;
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            
+            // Random rotation
+            const rotation = Math.random() * 30 - 15;
+            heart.style.transform = `rotate(${rotation}deg)`;
             
             hearts.appendChild(heart);
             
@@ -146,8 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create Confetti Function
     function createConfetti() {
-        // Create 50 confetti pieces with random colors and positions
-        for (let i = 0; i < 50; i++) {
+        // Create 70 confetti pieces with random colors and positions
+        for (let i = 0; i < 70; i++) {
             const piece = document.createElement('div');
             piece.className = 'confetti-piece';
             
@@ -174,6 +262,11 @@ document.addEventListener('DOMContentLoaded', function() {
             piece.style.top = '0';
             piece.style.animationDelay = `${Math.random() * 3}s`;
             
+            // Random size
+            const size = Math.random() * 10 + 5;
+            piece.style.width = `${size}px`;
+            piece.style.height = `${size}px`;
+            
             confetti.appendChild(piece);
             
             // Trigger animation in the next frame
@@ -188,28 +281,210 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Create Fireworks Function
+    function createFireworks() {
+        // Create 5 fireworks at random positions
+        for (let i = 0; i < 5; i++) {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            
+            // Random position
+            const left = 10 + Math.random() * 80;
+            const top = 10 + Math.random() * 60;
+            firework.style.left = `${left}%`;
+            firework.style.top = `${top}%`;
+            
+            // Random size
+            const size = Math.random() * 100 + 50;
+            firework.style.width = `${size}px`;
+            firework.style.height = `${size}px`;
+            
+            // Random delay
+            const delay = Math.random() * 0.5;
+            firework.style.animationDelay = `${delay}s`;
+            
+            // Random color
+            const color = fireworkColors[Math.floor(Math.random() * fireworkColors.length)];
+            
+            // Create firework particles
+            const particleCount = 20;
+            for (let j = 0; j < particleCount; j++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework-particle';
+                
+                // Set particle color
+                particle.style.backgroundColor = color;
+                
+                // Set random transform for each particle
+                const angle = (j / particleCount) * 360;
+                const distance = size / 2;
+                const tx = Math.cos(angle * Math.PI / 180) * distance;
+                const ty = Math.sin(angle * Math.PI / 180) * distance;
+                particle.style.setProperty('--transform', `translate(${tx}px, ${ty}px)`);
+                
+                firework.appendChild(particle);
+            }
+            
+            fireworks.appendChild(firework);
+            
+            // Trigger animation
+            requestAnimationFrame(() => {
+                firework.classList.add('animate');
+            });
+            
+            // Remove firework after animation completes
+            setTimeout(() => {
+                firework.remove();
+            }, 1500);
+        }
+    }
+
+    // Animation for counter numbers
+    function animateCounters() {
+        const yearCounter = document.getElementById('yearsTogether');
+        const monthCounter = document.getElementById('monthsTogether');
+        const dayCounter = document.getElementById('daysTogether');
+        
+        const yearTarget = parseInt(yearCounter.textContent);
+        const monthTarget = parseInt(monthCounter.textContent);
+        const dayTarget = parseInt(dayCounter.textContent);
+        
+        let yearCurrent = 0;
+        let monthCurrent = 0;
+        let dayCurrent = 0;
+        
+        const yearStep = yearTarget / 50;
+        const monthStep = monthTarget / 50;
+        const dayStep = dayTarget / 50;
+        
+        const counterInterval = setInterval(() => {
+            yearCurrent += yearStep;
+            monthCurrent += monthStep;
+            dayCurrent += dayStep;
+            
+            yearCounter.textContent = Math.ceil(yearCurrent);
+            monthCounter.textContent = Math.ceil(monthCurrent);
+            dayCounter.textContent = Math.ceil(dayCurrent);
+            
+            if (yearCurrent >= yearTarget && monthCurrent >= monthTarget && dayCurrent >= dayTarget) {
+                clearInterval(counterInterval);
+                yearCounter.textContent = yearTarget;
+                monthCounter.textContent = monthTarget;
+                dayCounter.textContent = dayTarget;
+            }
+        }, 30);
+    }
+    
+    // Animate counters on load
+    setTimeout(animateCounters, 1000);
+    
+    // Parallax effect for photo frames
+    document.addEventListener('mousemove', function(e) {
+        const frames = document.querySelectorAll('.photo-frame');
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        
+        frames.forEach((frame, index) => {
+            const depth = 0.05 + (index * 0.02);
+            const moveX = (x * 30 * depth);
+            const moveY = (y * 30 * depth);
+            frame.style.transform = `translate(${moveX}px, ${moveY}px) scale(1) rotate(${index * 2 - 2}deg)`;
+        });
+    });
+    
     // Sound Function (Optional)
     function playSound(type) {
-        // This is a placeholder for sound functionality
-        // In a real implementation, you would create and play audio elements
-        // For now, we'll just log that a sound would play
+        // Log sound effect for debugging
         console.log(`Sound effect: ${type}`);
         
-        // Example implementation (commented out since we're not using actual audio files):
-        /*
+        // Create audio element
         const sound = new Audio();
+        
+        // Set source based on type
         switch(type) {
             case 'bounce':
-                sound.src = 'bounce.mp3';
+                // Simulate bounce sound with oscillator
+                const bounceContext = new (window.AudioContext || window.webkitAudioContext)();
+                const bounceOsc = bounceContext.createOscillator();
+                const bounceGain = bounceContext.createGain();
+                
+                bounceOsc.type = 'sine';
+                bounceOsc.frequency.setValueAtTime(150, bounceContext.currentTime);
+                bounceOsc.frequency.exponentialRampToValueAtTime(40, bounceContext.currentTime + 0.5);
+                
+                bounceGain.gain.setValueAtTime(0.3, bounceContext.currentTime);
+                bounceGain.gain.exponentialRampToValueAtTime(0.01, bounceContext.currentTime + 0.5);
+                
+                bounceOsc.connect(bounceGain);
+                bounceGain.connect(bounceContext.destination);
+                
+                bounceOsc.start();
+                bounceOsc.stop(bounceContext.currentTime + 0.5);
                 break;
+                
             case 'cut':
-                sound.src = 'cut.mp3';
+                // Simulate cutting sound with noise
+                const cutContext = new (window.AudioContext || window.webkitAudioContext)();
+                const cutOsc = cutContext.createOscillator();
+                const cutGain = cutContext.createGain();
+                
+                cutOsc.type = 'sawtooth';
+                cutOsc.frequency.setValueAtTime(800, cutContext.currentTime);
+                cutOsc.frequency.exponentialRampToValueAtTime(200, cutContext.currentTime + 0.2);
+                
+                cutGain.gain.setValueAtTime(0.2, cutContext.currentTime);
+                cutGain.gain.exponentialRampToValueAtTime(0.01, cutContext.currentTime + 0.2);
+                
+                cutOsc.connect(cutGain);
+                cutGain.connect(cutContext.destination);
+                
+                cutOsc.start();
+                cutOsc.stop(cutContext.currentTime + 0.2);
                 break;
+                
             case 'celebrate':
-                sound.src = 'celebrate.mp3';
+                // Simulate celebration sound with multiple oscillators
+                const celebContext = new (window.AudioContext || window.webkitAudioContext)();
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                
+                notes.forEach((note, i) => {
+                    const celebOsc = celebContext.createOscillator();
+                    const celebGain = celebContext.createGain();
+                    
+                    celebOsc.type = 'sine';
+                    celebOsc.frequency.value = note;
+                    
+                    celebGain.gain.setValueAtTime(0, celebContext.currentTime);
+                    celebGain.gain.linearRampToValueAtTime(0.2, celebContext.currentTime + 0.1 + (i * 0.1));
+                    celebGain.gain.exponentialRampToValueAtTime(0.01, celebContext.currentTime + 1 + (i * 0.1));
+                    
+                    celebOsc.connect(celebGain);
+                    celebGain.connect(celebContext.destination);
+                    
+                    celebOsc.start();
+                    celebOsc.stop(celebContext.currentTime + 1 + (i * 0.1));
+                });
                 break;
         }
-        sound.play().catch(e => console.log('Audio play failed:', e));
-        */
     }
+
+    // Init timeline animation on scroll
+    function initScrollAnimations() {
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        timelineItems.forEach(item => {
+            observer.observe(item);
+        });
+    }
+
+    // Initialize scroll animations
+    initScrollAnimations();
 });
