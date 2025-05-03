@@ -1,0 +1,15 @@
+<svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+  <!-- Handle -->
+  <rect x="0" y="5" width="40" height="10" rx="2" fill="#8D6E63" />
+  
+  <!-- Blade -->
+  <polygon points="40,0 100,0 100,20 40,20" fill="#BDBDBD" />
+  
+  <!-- Detail lines on handle -->
+  <line x1="5" y1="7" x2="35" y2="7" stroke="#5D4037" stroke-width="1" />
+  <line x1="5" y1="10" x2="35" y2="10" stroke="#5D4037" stroke-width="1" />
+  <line x1="5" y1="13" x2="35" y2="13" stroke="#5D4037" stroke-width="1" />
+  
+  <!-- Shine on blade -->
+  <line x1="45" y1="5" x2="95" y2="5" stroke="#FFFFFF" stroke-width="1" opacity="0.5" />
+</svg>

@@ -1,0 +1,31 @@
+<svg viewBox="0 0 50 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Head -->
+  <circle cx="25" cy="20" r="10" fill="#FFD3B6" />
+  
+  <!-- Hair -->
+  <path d="M15 20 Q25 0 35 20" fill="#5D4037" />
+  
+  <!-- Body - Dress -->
+  <path d="M15 30 L35 30 L40 60 L10 60 Z" fill="#E91E63" />
+  
+  <!-- Legs -->
+  <rect x="15" y="60" width="8" height="25" fill="#FFD3B6" />
+  <rect x="27" y="60" width="8" height="25" fill="#FFD3B6" />
+  
+  <!-- Arms -->
+  <rect x="5" y="35" width="10" height="5" fill="#FFD3B6" />
+  <rect x="35" y="35" width="10" height="5" fill="#FFD3B6" />
+  
+  <!-- Necklace -->
+  <path d="M20 31 Q25 35 30 31" stroke="#FFC107" fill="transparent" stroke-width="1" />
+  <circle cx="25" cy="33" r="1" fill="#FFC107" />
+  
+  <!-- Face details -->
+  <circle cx="22" cy="17" r="1" fill="#3E2723" />
+  <circle cx="28" cy="17" r="1" fill="#3E2723" />
+  <path d="M22 23 Q25 26 28 23" stroke="#3E2723" fill="transparent" stroke-width="1" />
+  
+  <!-- Shoes -->
+  <rect x="15" y="85" width="8" height="2" fill="#E91E63" />
+  <rect x="27" y="85" width="8" height="2" fill="#E91E63" />
+</svg>

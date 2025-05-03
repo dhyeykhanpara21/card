@@ -1,0 +1,407 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #f5cdde 0%, #d3b6e0 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* Name Form Styles */
+.name-form {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    transition: all 0.5s ease;
+}
+
+.name-form h1 {
+    color: #e91e63;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #d3b6e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #e91e63;
+}
+
+button {
+    background: #e91e63;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #c2185b;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Animation Container Styles */
+.animation-container {
+    width: 100%;
+    height: 80vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.scene {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.plate {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 40px;
+    z-index: 1;
+}
+
+.cake {
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    z-index: 2;
+    transition: top 1s cubic-bezier(0.25, 1, 0.5, 1.3);
+}
+
+.cake.dropped {
+    top: calc(80% - 120px);
+}
+
+.character {
+    position: absolute;
+    bottom: 20%;
+    width: 50px;
+    height: 100px;
+    z-index: 3;
+}
+
+.husband {
+    left: -100px;
+    transition: left 2s ease;
+}
+
+.husband.entered {
+    left: calc(50% - 70px);
+}
+
+.wife {
+    right: -100px;
+    transition: right 2s ease;
+}
+
+.wife.entered {
+    right: calc(50% - 70px);
+}
+
+.knife {
+    position: absolute;
+    top: calc(80% - 110px);
+    left: 50%;
+    transform: translateX(-120px);
+    width: 100px;
+    height: 20px;
+    z-index: 4;
+    opacity: 0;
+    transition: opacity 0.5s, transform 1s;
+}
+
+.knife.visible {
+    opacity: 1;
+}
+
+.knife.cutting {
+    transform: translateX(-50px);
+}
+
+.cut {
+    position: absolute;
+    top: calc(80% - 100px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: #fff;
+    z-index: 5;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+.cut.animate {
+    animation: cutCake 0.8s forwards;
+}
+
+@keyframes cutCake {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 80px;
+    }
+}
+
+.message {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s;
+    z-index: 6;
+}
+
+.message.visible {
+    opacity: 1;
+    animation: glowing 2s infinite alternate;
+}
+
+.message h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(233, 30, 99, 0.7);
+    margin-bottom: 10px;
+}
+
+.message p {
+    font-size: 1.5rem;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(233, 30, 99, 0.7);
+}
+
+@keyframes glowing {
+    0% {
+        text-shadow: 0 0 10px rgba(233, 30, 99, 0.7);
+    }
+    100% {
+        text-shadow: 0 0 20px #e91e63, 0 0 30px #e91e63, 0 0 40px #e91e63;
+    }
+}
+
+.hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+}
+
+.heart svg {
+    width: 100%;
+    height: 100%;
+    fill: #e91e63;
+}
+
+.heart.animate {
+    animation: floatHeart 4s ease-in-out forwards;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.confetti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+}
+
+.confetti-piece svg {
+    width: 100%;
+    height: 100%;
+}
+
+.confetti-piece.animate {
+    animation: fallConfetti 5s ease-in-out forwards;
+}
+
+@keyframes fallConfetti {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.restart-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .plate {
+        width: 150px;
+    }
+    
+    .cake {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .character {
+        width: 40px;
+        height: 80px;
+    }
+    
+    .husband.entered {
+        left: calc(50% - 60px);
+    }
+    
+    .wife.entered {
+        right: calc(50% - 60px);
+    }
+    
+    .knife {
+        width: 80px;
+    }
+    
+    .message h2 {
+        font-size: 2rem;
+    }
+    
+    .message p {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .plate {
+        width: 120px;
+    }
+    
+    .cake {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .character {
+        width: 30px;
+        height: 60px;
+    }
+    
+    .husband.entered {
+        left: calc(50% - 45px);
+    }
+    
+    .wife.entered {
+        right: calc(50% - 45px);
+    }
+    
+    .knife {
+        width: 60px;
+        height: 15px;
+    }
+    
+    .message h2 {
+        font-size: 1.5rem;
+    }
+    
+    .message p {
+        font-size: 1rem;
+    }
+    
+    .name-form h1 {
+        font-size: 1.8rem;
+    }
+    
+    input, button {
+        padding: 10px;
+    }
+}

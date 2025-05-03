@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Name Input Form -->
+        <div id="nameForm" class="name-form">
+            <h1>Anniversary Celebration</h1>
+            <p>Enter names to start the celebration:</p>
+            <div class="form-group">
+                <input type="text" id="name1" placeholder="Partner 1 Name" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="name2" placeholder="Partner 2 Name" required>
+            </div>
+            <button id="startButton">Celebrate!</button>
+        </div>
+
+        <!-- Animation Container -->
+        <div id="animationContainer" class="animation-container hidden">
+            <div class="scene">
+                <div id="plate" class="plate">
+                    <svg viewBox="0 0 200 40">
+                        <ellipse cx="100" cy="20" rx="100" ry="20" fill="#f5f5f5" />
+                    </svg>
+                </div>
+                
+                <div id="cake" class="cake">
+                    <svg viewBox="0 0 100 100">
+                        <!-- Base layer -->
+                        <rect x="10" y="70" width="80" height="20" rx="5" fill="#F9C6D2" />
+                        <!-- Middle layer -->
+                        <rect x="20" y="50" width="60" height="20" rx="5" fill="#F7A9C3" />
+                        <!-- Top layer -->
+                        <rect x="30" y="30" width="40" height="20" rx="5" fill="#F06292" />
+                        <!-- Candles -->
+                        <rect x="40" y="15" width="2" height="15" fill="#FFD54F" />
+                        <rect x="50" y="10" width="2" height="20" fill="#FFD54F" />
+                        <rect x="60" y="15" width="2" height="15" fill="#FFD54F" />
+                        <!-- Flames -->
+                        <circle cx="41" cy="15" r="2" fill="#FF7043" />
+                        <circle cx="51" cy="10" r="2" fill="#FF7043" />
+                        <circle cx="61" cy="15" r="2" fill="#FF7043" />
+                        <!-- Decorations -->
+                        <circle cx="25" cy="60" r="2" fill="#FFFFFF" />
+                        <circle cx="45" cy="60" r="2" fill="#FFFFFF" />
+                        <circle cx="65" cy="60" r="2" fill="#FFFFFF" />
+                        <circle cx="85" cy="60" r="2" fill="#FFFFFF" />
+                        <circle cx="35" cy="40" r="2" fill="#FFFFFF" />
+                        <circle cx="55" cy="40" r="2" fill="#FFFFFF" />
+                        <circle cx="75" cy="40" r="2" fill="#FFFFFF" />
+                    </svg>
+                </div>
+                
+                <div id="husband" class="character husband">
+                    <svg viewBox="0 0 50 100">
+                        <!-- Head -->
+                        <circle cx="25" cy="20" r="10" fill="#FFD3B6" />
+                        <!-- Body -->
+                        <rect x="15" y="30" width="20" height="30" fill="#5D4037" />
+                        <!-- Legs -->
+                        <rect x="15" y="60" width="8" height="25" fill="#3E2723" />
+                        <rect x="27" y="60" width="8" height="25" fill="#3E2723" />
+                        <!-- Arms -->
+                        <rect x="5" y="35" width="10" height="5" fill="#5D4037" />
+                        <rect x="35" y="35" width="10" height="5" fill="#5D4037" />
+                        <!-- Face details -->
+                        <circle cx="22" cy="17" r="1" fill="#3E2723" />
+                        <circle cx="28" cy="17" r="1" fill="#3E2723" />
+                        <path d="M22 23 Q25 26 28 23" stroke="#3E2723" fill="transparent" stroke-width="1" />
+                    </svg>
+                </div>
+                
+                <div id="wife" class="character wife">
+                    <svg viewBox="0 0 50 100">
+                        <!-- Head -->
+                        <circle cx="25" cy="20" r="10" fill="#FFD3B6" />
+                        <!-- Hair -->
+                        <path d="M15 20 Q25 0 35 20" fill="#5D4037" />
+                        <!-- Body - Dress -->
+                        <path d="M15 30 L35 30 L40 60 L10 60 Z" fill="#E91E63" />
+                        <!-- Legs -->
+                        <rect x="15" y="60" width="8" height="25" fill="#FFD3B6" />
+                        <rect x="27" y="60" width="8" height="25" fill="#FFD3B6" />
+                        <!-- Arms -->
+                        <rect x="5" y="35" width="10" height="5" fill="#FFD3B6" />
+                        <rect x="35" y="35" width="10" height="5" fill="#FFD3B6" />
+                        <!-- Face details -->
+                        <circle cx="22" cy="17" r="1" fill="#3E2723" />
+                        <circle cx="28" cy="17" r="1" fill="#3E2723" />
+                        <path d="M22 23 Q25 26 28 23" stroke="#3E2723" fill="transparent" stroke-width="1" />
+                    </svg>
+                </div>
+                
+                <div id="knife" class="knife">
+                    <svg viewBox="0 0 100 20">
+                        <!-- Handle -->
+                        <rect x="0" y="5" width="40" height="10" rx="2" fill="#8D6E63" />
+                        <!-- Blade -->
+                        <polygon points="40,0 100,0 100,20 40,20" fill="#BDBDBD" />
+                    </svg>
+                </div>
+                
+                <div id="cut" class="cut"></div>
+                
+                <div id="message" class="message">
+                    <h2>Happy Anniversary</h2>
+                    <p id="coupleNames"></p>
+                </div>
+                
+                <div id="hearts" class="hearts"></div>
+                <div id="confetti" class="confetti"></div>
+            </div>
+            
+            <!-- Restart Button -->
+            <button id="restartButton" class="restart-button hidden">Restart Animation</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
