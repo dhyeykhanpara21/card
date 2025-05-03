@@ -602,3 +602,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize scroll animations
     initScrollAnimations();
 });
+
+// Set your anniversary start date (3rd May 2020 as an example)
+function updateAnniversaryCounter() {    const startDate = new Date(2019, 4, 3);; // Months are 0-indexed: 4 = May
+    const now = new Date();
+
+    let years = now.getFullYear() - startDate.getFullYear();
+    let months = now.getMonth() - startDate.getMonth();
+    let days = now.getDate() - startDate.getDate();
+
+    if (days < 0) {
+        months--;
+        // Get days in previous month
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    // Calculate total days
+    const diffTime = now - startDate;
+    const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    document.getElementById('yearsTogether').textContent = years;
+    document.getElementById('monthsTogether').textContent = months + years * 12;
+    document.getElementById('daysTogether').textContent = totalDays;
+}
+
+// Call once on load
+updateAnniversaryCounter();
+// Optionally, update every day at midnight
+setInterval(updateAnniversaryCounter, 1000 * 60 * 60); // Update every hour
