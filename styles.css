@@ -540,6 +540,75 @@ body {
     animation: characterWave 3s infinite 3.5s;
 }
 
+.child {
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: bottom 2s ease, transform 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(33, 150, 243, 0.5));
+    z-index: 2;
+    width: 40px;
+    height: 80px;
+}
+
+.child.entered {
+    bottom: 15%;
+    animation: childClap 1s infinite;
+}
+
+@keyframes childClap {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.05); }
+}
+
+.family-member {
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 1s ease, opacity 1s ease;
+}
+
+.family-member.entered {
+    transform: scale(1);
+    opacity: 1;
+    animation: familyClap 0.8s infinite;
+}
+
+.family-member-1 {
+    position: absolute;
+    bottom: 20%;
+    left: calc(50% - 120px);
+}
+
+.family-member-2 {
+    position: absolute;
+    bottom: 20%;
+    right: calc(50% - 120px);
+}
+
+@keyframes familyClap {
+    0%, 100% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+/* Clapping animation for hands */
+.left-hand, .right-hand {
+    animation: clapping 0.5s infinite alternate;
+    transform-origin: bottom center;
+}
+
+@keyframes clapping {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(3px);
+    }
+}
+
 @keyframes characterWave {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); }

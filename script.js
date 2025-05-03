@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             cake.classList.add('dropped');
             
-            // Play bounce sound (optional)
+            // Play bounce sound
             playSound('bounce');
             
             // Step 2: Characters enter from sides
@@ -131,50 +131,67 @@ document.addEventListener('DOMContentLoaded', function() {
                 husband.classList.add('entered');
                 wife.classList.add('entered');
                 
-                // Step 3: Show knife for cutting
+                // Step 3: Child enters from bottom
                 setTimeout(() => {
-                    knife.classList.add('visible');
+                    const child = document.getElementById('child');
+                    child.classList.add('entered');
                     
-                    // Step 4: Cut the cake
+                    // Step 4: Family members appear
                     setTimeout(() => {
-                        knife.classList.add('cutting');
-                        cut.classList.add('animate');
+                        const familyMember1 = document.getElementById('familyMember1');
+                        const familyMember2 = document.getElementById('familyMember2');
+                        familyMember1.classList.add('entered');
+                        familyMember2.classList.add('entered');
                         
-                        // Play cutting sound (optional)
-                        playSound('cut');
+                        // Play applause sound
+                        playSound('applause');
                         
-                        // Step 5: Show message and celebration effects
+                        // Step 5: Show knife for cutting
                         setTimeout(() => {
-                            message.classList.add('visible');
-                            createHearts();
-                            createConfetti();
-                            createFireworks();
+                            knife.classList.add('visible');
                             
-                            // Play celebration sound (optional)
-                            playSound('celebrate');
-                            
-                            // Continue celebration effects
-                            const celebrationInterval = setInterval(() => {
-                                createHearts();
-                                createConfetti();
-                                if (Math.random() > 0.7) {
-                                    createFireworks();
-                                }
-                            }, 3000);
-                            
-                            // Show restart button
+                            // Step 6: Cut the cake
                             setTimeout(() => {
-                                restartButton.classList.remove('hidden');
+                                knife.classList.add('cutting');
+                                cut.classList.add('animate');
                                 
-                                // Stop continuous celebration effects after some time
+                                // Play cutting sound
+                                playSound('cut');
+                                
+                                // Step 7: Show message and celebration effects
                                 setTimeout(() => {
-                                    clearInterval(celebrationInterval);
-                                }, 15000);
-                            }, 2000);
-                            
+                                    message.classList.add('visible');
+                                    createHearts();
+                                    createConfetti();
+                                    createFireworks();
+                                    
+                                    // Play celebration sound
+                                    playSound('celebrate');
+                                    
+                                    // Continue celebration effects
+                                    const celebrationInterval = setInterval(() => {
+                                        createHearts();
+                                        createConfetti();
+                                        if (Math.random() > 0.7) {
+                                            createFireworks();
+                                        }
+                                    }, 3000);
+                                    
+                                    // Show restart button
+                                    setTimeout(() => {
+                                        restartButton.classList.remove('hidden');
+                                        
+                                        // Stop continuous celebration effects after some time
+                                        setTimeout(() => {
+                                            clearInterval(celebrationInterval);
+                                        }, 15000);
+                                    }, 2000);
+                                    
+                                }, 1000);
+                            }, 1000);
                         }, 1000);
-                    }, 1000);
-                }, 1500);
+                    }, 800);
+                }, 1000);
             }, 1000);
         }, 500);
     }
@@ -185,6 +202,16 @@ document.addEventListener('DOMContentLoaded', function() {
         cake.classList.remove('dropped');
         husband.classList.remove('entered');
         wife.classList.remove('entered');
+        
+        // Reset child and family members
+        const child = document.getElementById('child');
+        const familyMember1 = document.getElementById('familyMember1');
+        const familyMember2 = document.getElementById('familyMember2');
+        
+        if (child) child.classList.remove('entered');
+        if (familyMember1) familyMember1.classList.remove('entered');
+        if (familyMember2) familyMember2.classList.remove('entered');
+        
         knife.classList.remove('visible', 'cutting');
         cut.classList.remove('animate');
         message.classList.remove('visible');
@@ -420,6 +447,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 bounceOsc.start();
                 bounceOsc.stop(bounceContext.currentTime + 0.5);
+                break;
+            
+            case 'applause':
+                // Simulate applause sound with white noise
+                const applauseContext = new (window.AudioContext || window.webkitAudioContext)();
+                const bufferSize = 4096;
+                const whiteNoise = applauseContext.createScriptProcessor(bufferSize, 1, 1);
+                const applauseGain = applauseContext.createGain();
+                
+                whiteNoise.onaudioprocess = function(e) {
+                    const output = e.outputBuffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        // Generate random noise with pattern to simulate clapping
+                        output[i] = Math.random() * 2 - 1;
+                        if (i % 2000 < 200) {
+                            output[i] *= 0.8; // Louder parts
+                        } else {
+                            output[i] *= 0.2; // Quieter parts
+                        }
+                    }
+                };
+                
+                applauseGain.gain.setValueAtTime(0.1, applauseContext.currentTime);
+                applauseGain.gain.linearRampToValueAtTime(0.3, applauseContext.currentTime + 0.2);
+                applauseGain.gain.linearRampToValueAtTime(0.1, applauseContext.currentTime + 1.5);
+                applauseGain.gain.exponentialRampToValueAtTime(0.01, applauseContext.currentTime + 2);
+                
+                whiteNoise.connect(applauseGain);
+                applauseGain.connect(applauseContext.destination);
+                
+                // Stop the applause after 2 seconds
+                setTimeout(() => {
+                    whiteNoise.disconnect();
+                }, 2000);
                 break;
                 
             case 'cut':
