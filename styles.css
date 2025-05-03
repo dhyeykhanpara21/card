@@ -169,6 +169,22 @@ body {
     animation: glow 2s ease-in-out infinite alternate;
 }
 
+/* Attention flash animation for main title when animation completes */
+.main-title.attention-flash {
+    animation: attention-flash 1s ease-in-out 5;
+}
+
+@keyframes attention-flash {
+    0%, 100% {
+        transform: scale(1);
+        text-shadow: 0 0 20px var(--primary-color);
+    }
+    50% {
+        transform: scale(1.05);
+        text-shadow: 0 0 30px var(--primary-color), 0 0 50px var(--secondary-color), 0 0 70px var(--accent-color);
+    }
+}
+
 .and-symbol {
     display: inline-block;
     font-size: 4rem;

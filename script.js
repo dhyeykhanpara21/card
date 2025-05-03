@@ -184,6 +184,30 @@ document.addEventListener('DOMContentLoaded', function() {
                                         // Stop continuous celebration effects after some time
                                         setTimeout(() => {
                                             clearInterval(celebrationInterval);
+                                            
+                                            // Redirect to main page after animation completes (10 seconds)
+                                            setTimeout(() => {
+                                                // Close animation window
+                                                animationContainer.classList.add('hidden');
+                                                
+                                                // Scroll to top of main page
+                                                window.scrollTo({
+                                                    top: 0,
+                                                    behavior: 'smooth'
+                                                });
+                                                
+                                                // Flash effect on main title to draw attention
+                                                const mainTitle = document.querySelector('.main-title');
+                                                if (mainTitle) {
+                                                    mainTitle.classList.add('attention-flash');
+                                                    setTimeout(() => {
+                                                        mainTitle.classList.remove('attention-flash');
+                                                    }, 3000);
+                                                }
+                                                
+                                                // Reset animation for potential replay
+                                                resetAnimation();
+                                            }, 10000);
                                         }, 15000);
                                     }, 2000);
                                     
